@@ -114,6 +114,11 @@
                                           return (row.user_email)
                                       }
                                   },
+                                  {
+                                      "render": function (data, type, row, meta) {
+                                          return (row.phone_number)
+                                      }
+                                  },
                                    {
                                        "render": function (data, type, row, meta) {
                                            return (row.user_uno)
@@ -149,6 +154,7 @@
               fdata.append("email", $("#email").val());
               fdata.append("uno", $("#uno").val());
               fdata.append("spass", $("#pass").val());
+              fdata.append("phone_number", $("#phone_number").val());
 
               if ($("#btninup").val() == "Insert")
               {
@@ -237,6 +243,7 @@
            $("#uno").val('');
            $("#pass").val('');
            $("#cpass").val('');
+           $("#phone_number").val('');
            $("#btninup").val('Insert');
       }
       function requiredcheck()
@@ -434,6 +441,22 @@
 
             </div>
 
+            <div class="row">
+
+                <div class="col-md-1">
+
+                </div>
+
+                <div class="col-md-5">
+
+                    <div class="form-group">
+                        <input type="text" id="phone_number" placeholder="Phone Number" maxlength="10" class="form-control" required="" onkeyup="check(event,this)">
+                    </div>
+
+                </div>
+
+            </div>
+
 
             <div class="row">
                 <div class="col-md-1">
@@ -444,6 +467,7 @@
                     <input type="hidden" id="hdnpass" />
                     <input type="submit" id="btninup" class="btn btn-primary" value="Insert" />
                 </div>
+                
             </div>
         <br />
         <div class="row">
@@ -456,6 +480,7 @@
                             <td>First Name</td>
                             <td>Last Name</td>
                             <td>Email</td>
+                            <td>Phone Number</td>
                             <td>Unit Number</td>
                             <td>Password</td>
                             <td>Action</td>
