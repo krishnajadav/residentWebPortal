@@ -58,7 +58,7 @@
 		   }
    }
   var Display,clear;
-  var baseURL="http://localhost:5000/";
+  var baseURL="http://localhost:5556/";
   $(document).ready(function () {
 
     
@@ -75,7 +75,7 @@
               "serverSide": false,
               "bSort": false,
               "searching": true,
-              "sAjaxSource": baseURL+"/user/getUserData",
+              "sAjaxSource": baseURL+"users",
               "pageLength": 10,
               "bDestroy": true,
               "bLengthChange": true,
@@ -86,7 +86,7 @@
               "fnServerData": function (sSource, aoData, fnCallback) {
                   $.ajax({
                       "dataType": 'json',
-                      "type": "POST",
+                      "type": "GET",
                       "url": sSource,
                       "data": aoData,
                       "success": fnCallback
@@ -101,12 +101,12 @@
                                 },
                                 {
                                     "render": function (data, type, row, meta) {
-                                        return (row.user_fname)
+                                        return (row.user_firstname)
                                     }
                                 },
                                  {
                                      "render": function (data, type, row, meta) {
-                                         return (row.user_lname)
+                                         return (row.user_lastname)
                                      }
                                  },
                                   {
@@ -121,12 +121,12 @@
                                    },
                                     {
                                         "render": function (data, type, row, meta) {
-                                            return (row.user_pass)
+                                            return (row.user_password)
                                         }
                                     },
                                 {
                                     "render": function (data, type, row, meta) {
-                                        return '<button class="btn btn-primary fa fa-check-square"  title="Edit" onclick="editdata(\'' + row.user_id + '\',\'' + row.user_fname + '\',\'' + row.user_lname + '\',\''+row.user_email+'\',\''+row.user_uno+'\',\''+row.user_pass+'\')"></button>' +
+                                        return '<button class="btn btn-primary fa fa-check-square"  title="Edit" onclick="editdata(\'' + row.user_id + '\',\'' + row.user_firstname + '\',\'' + row.user_lastname + '\',\''+row.user_email+'\',\''+row.user_uno+'\',\''+row.user_password+'\')"></button>' +
                                     '<button class="btn btn-danger glyphicon glyphicon-trash" title="Delete"  onclick="deletedata(\'' + row.user_id + '\')" style="margin-left: 10px;"></button>';
                                     }
                                 }
@@ -153,7 +153,7 @@
               if ($("#btninup").val() == "Insert")
               {
                   $.ajax({
-                      url: baseURL+"/user/checkUserData",
+                      url: baseURL+"check-resident",
                       type: "POST",
                       contentType: false, // Not to set any content header
                       processData: false, // Not to process data
@@ -161,7 +161,7 @@
                       success: function (result) {
                           if (result == "1") {
                               $.ajax({
-                                  url: baseURL+"/user/insertUserData",
+                                  url: baseURL+"upsert-resident",
                                   type: "POST",
                                   contentType: false, // Not to set any content header
                                   processData: false, // Not to process data
@@ -198,54 +198,33 @@
                   });
               }
               else
-              {
-                  
-                  fdata.append("upuno", $("#hdnuno").val());
-                  fdata.append("upemail", $("#hdnemail").val());
-                  $.ajax({
-                      url: baseURL+"/user/checkUserData",
-                      type: "POST",
-                      contentType: false, // Not to set any content header
-                      processData: false, // Not to process data
-                      data: fdata,
-                      success: function (result) {
-                          if (result == 1) {
-                                    $.ajax({
-                                        url: baseURL+"/user/insertUserData",
-                                        type: "POST",
-                                        contentType: false, // Not to set any content header
-                                        processData: false, // Not to process data
-                                        data: fdata,
-                                        success: function (result) {
-                                            if (result == "1") {
-                                                swal("Successfully Resident Updated!", "", "success", {
-                                                    button: "Close",
-                                                });
-                                                $("#btninup").val("Insert");
-                                                Display();
-                                                clear();
-                                            }
-                                            else {
-                                                swal("Resident Not Updated", "", "error", {
-                                                    button: "Close",
-                                                });
-                                            }
-                                        },
-                                        error: function (err) {
-                                            alert(err.statusText);
-                                        }
-                                    });
-                          }
-                          else {
-                              swal("This Resident Already Exists", "", "error", {
-                                  button: "Close",
-                              });
-                          }
-                      },
-                      error: function (err) {
-                          alert(err.statusText);
-                      }
-                  });
+              {    
+                
+                $.ajax({
+                    url: baseURL+"upsert-resident",
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fdata,
+                    success: function (result) {
+                        if (result == "1") {
+                            swal("Successfully Resident Updated!", "", "success", {
+                                button: "Close",
+                            });
+                            $("#btninup").val("Insert");
+                            Display();
+                            clear();
+                        }
+                        else {
+                            swal("Resident Not Updated", "", "error", {
+                                button: "Close",
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
               }
           }
       });
@@ -268,6 +247,12 @@
                   isValid = true; 
               }
           });
+          $('input[type="password"]').each(function () {
+              if ($(this).val() == '') {
+                  isValid = true; 
+              }
+          });
+          
           return isValid;
       }
   });
@@ -284,6 +269,7 @@
             $("#pass").val(pass);
             $("#cpass").val(pass);
             $("#btninup").val("Update");
+            $("#email").prop("disabled", true)
         }
         function deletedata(ID) {
             bootbox.confirm({
@@ -301,8 +287,8 @@
                     if (result == true) {
                         var data = { "ID": ID };
                         $.ajax({
-                            url: baseURL+"/user/deleteUserData",
-                            type: "POST",
+                            url: baseURL+"/delete-resident",
+                            type: "DELETE",
                             contentType: "application/json; charset=utf-8",
                             data: JSON.stringify(data),
                             dataType: "json",
