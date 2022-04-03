@@ -81,6 +81,19 @@
 	<script src="https://unpkg.com/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 	
 	    <script>
+
+	function setCookie(name,value,days) {
+		var expires = "";
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days*24*60*60*1000));
+			expires = "; expires=" + date.toUTCString();
+		}
+		document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+	}
+	function eraseCookie(name) {   
+		document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	}			
     $( document ).ready(function() {
 
 		var baseURL="http://localhost:5000/";
@@ -96,17 +109,23 @@
 					url: baseURL+"user/authentication",
 					dataType : 'json',
 					data : JSON.stringify({
-    					'userName': userEmail,
-    					'password': userPassword
+    					'user_email': userEmail,
+    					'user_password': userPassword
     				}),
 					success : function(result) {
     					
     					if(result.success==true)
     					{
-	   						 swal(result.data, "", "success", {
-		                            button: "Close",
-		                        });
-								clear();
+							setCookie('user_type',result.user_type,1);
+							if(result.user_type=="Resident")
+							{								
+								setCookie('user_id',result.user_id,1);
+								window.location.href = "AddServiceRequest.html";
+							}
+							else
+							{
+								window.location.href = "ManageServiceRequest.html";						
+							}
     					}
     					else
     					{
