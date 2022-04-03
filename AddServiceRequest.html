@@ -88,6 +88,16 @@
         </style>
 
     <script>
+
+    function hideEmptyImage()
+    {
+        $('img').each(function () { console.log('here');
+            if($(this).attr('src') == '' || $(this).attr('src').indexOf('undefined')!=-1){
+                $(this).hide()
+            }
+        });
+    }
+        
   function check(e,obj)
    {
 		  if(obj.id=="uno")
@@ -199,10 +209,12 @@
                                     }
                                 }
               ], "fnInitComplete": function (oSetting, json) {
+                hideEmptyImage();
               }
           });
       }
       Display();
+      hideEmptyImage();
       $("#btninup").click(function () {
           if (requiredcheck()) {
               swal("Please Enter Data", "", "error", {
