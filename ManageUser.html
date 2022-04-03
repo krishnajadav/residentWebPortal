@@ -131,7 +131,7 @@
                                     },
                                 {
                                     "render": function (data, type, row, meta) {
-                                        return '<button class="btn btn-primary fa fa-check-square"  title="Edit" onclick="editdata(\'' + row.user_id + '\',\'' + row.user_firstname + '\',\'' + row.user_lastname + '\',\''+row.user_email+'\',\''+row.user_uno+'\',\''+row.user_password+'\')"></button>' +
+                                        return '<button class="btn btn-primary fa fa-check-square"  title="Edit" onclick="editdata(\'' + row.user_id + '\',\'' + row.user_firstname + '\',\'' + row.user_lastname + '\',\''+row.user_email+'\',\''+row.user_uno+'\',\''+row.user_password+'\', \''+row.phone_number+'\')"></button>' +
                                     '<button class="btn btn-danger glyphicon glyphicon-trash" title="Delete"  onclick="deletedata(\'' + row.user_id + '\')" style="margin-left: 10px;"></button>';
                                     }
                                 }
@@ -263,7 +263,7 @@
           return isValid;
       }
   });
-        function editdata(id,fname,lname,email,uno,pass)
+        function editdata(id,fname,lname,email,uno,pass,phone_number)
         {
            
             $("#hdnID").val(id);
@@ -272,6 +272,7 @@
             $("#fname").val(fname);
             $("#lname").val(lname);
             $("#email").val(email);
+            $("#phone_number").val(phone_number);
             $("#uno").val(uno);
             $("#pass").val(pass);
             $("#cpass").val(pass);
