@@ -278,13 +278,22 @@
               }
           }
       });
+
+
+    $("#image").change(function (e) {
+                var fileName = e.target.files[0].name;
+                $("#imagedis").css("display", "block");
+                $("#imagedis").attr("src",URL.createObjectURL(e.target.files[0]));
+            });
+
       
       clear=function()
       {
         $("#cname").val('');
         $("#title").val('');
         $("#description").val('');
-       // $("#image").val('');
+        $("#image").val('');
+        $("#imagedis").css("display", "none");
         $("#btninup").val('Insert');
       }
       function requiredcheck()
@@ -305,7 +314,8 @@
             $("#cname").val(category);
             $("#title").val(title);
             $("#description").val(description);
-         // $("#image").val('');
+            $("#imagedis").attr("src",image);
+            $("#imagedis").css("display", "block");
             $("#btninup").val("Update");
         }
         function deletedata(ID) {
@@ -430,11 +440,11 @@
 
                 <div class="col-md-5">
                     <div class="form-group">
-                        <input type="file"id="image" class="form-control" accept="image/png, image/jpeg">
+                        <input type="file" id="image" class="form-control" accept="image/png, image/jpeg">
                     </div>
 
                     <div class="col-md-3">
-                        <img src="" alt="" height="50" width="75" id="imagedis">
+                        <img src="" alt="" height="50" width="75" id="imagedis" style="display: none;">
                     </div>
 
                 </div>
