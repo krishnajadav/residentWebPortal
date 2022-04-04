@@ -267,6 +267,7 @@ function eraseCookie(name) {
            $("#cpass").val('');
            $("#phone_number").val('');
            $("#btninup").val('Insert');
+           $("#email").prop("disabled", false)
       }
       function requiredcheck()
       {
@@ -400,14 +401,14 @@ function eraseCookie(name) {
                 <div class="col-md-5">
 
                     <div class="form-group">
-                        <input type="text" id="fname" placeholder="First Name" class="form-control" maxlength="30" required="" onkeyup="check(event,this)">
+                        <input type="text" id="fname" placeholder="First Name" class="form-control" maxlength="30" required="">
                     </div>
 
                 </div>
 
                 <div class="col-md-5">
                     <div class="form-group">
-                        <input type="text" id="lname" placeholder="Last Name" class="form-control" maxlength="30" required="" onkeyup="check(event,this)">
+                        <input type="text" id="lname" placeholder="Last Name" class="form-control" maxlength="30" required="">
                     </div>
                 </div>
 

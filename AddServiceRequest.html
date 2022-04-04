@@ -352,7 +352,6 @@ function eraseCookie(name) {
   });
         function editdata(id,title,description,category,image)
         {
-           
             $("#hdnID").val(id);
             $("#cname").val(category);
             $("#title").val(title);
@@ -453,14 +452,14 @@ function eraseCookie(name) {
                 <div class="col-md-5">
 
                     <div class="form-group">
-                        <input type="text" id="cname" placeholder="Category" class="form-control" maxlength="30" required="" onkeyup="check(event,this)">
+                        <input type="text" id="cname" placeholder="Category" class="form-control" maxlength="30" required="">
                     </div>
 
                 </div>
 
                 <div class="col-md-5">
                     <div class="form-group">
-                        <input type="text" id="title" placeholder="Title" class="form-control" maxlength="30" required="" onkeyup="check(event,this)">
+                        <input type="text" id="title" placeholder="Title" class="form-control" maxlength="30" required="">
                     </div>
                 </div>
 
