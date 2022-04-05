@@ -150,7 +150,7 @@ function eraseCookie(name) {
 }
 
   var Display,clear,UserID;
-  var baseURL="http://localhost:5556/";
+  var baseURL="http://ec2-user@ec2-54-175-112-201.compute-1.amazonaws.com/";
   $(document).ready(function () {
 
     if(getCookie('user_type')!="Resident" || getCookie('user_id')==null)
@@ -175,7 +175,7 @@ function eraseCookie(name) {
               "serverSide": false,
               "bSort": false,
               "searching": true,
-              "sAjaxSource": baseURL+"/service-requests",
+              "sAjaxSource": baseURL+"service-requests",
               "pageLength": 10,
               "bDestroy": true,
               "bLengthChange": true,
@@ -187,7 +187,7 @@ function eraseCookie(name) {
                   $.ajax({
                             "contentType": "application/json; charset=utf-8",
                             "dataType": 'json',
-                            "type": "GET",
+                            "type": "POST",
                             "url": sSource,
                             "data": JSON.stringify(data),
                             "success": fnCallback
@@ -266,7 +266,7 @@ function eraseCookie(name) {
               if ($("#btninup").val() == "Insert")
               {
                 $.ajax({
-                                  url: baseURL+"/upsert-service-request",
+                                  url: baseURL+"upsert-service-request",
                                   type: "POST",
                                   contentType: false, // Not to set any content header
                                   processData: false, // Not to process data
@@ -294,7 +294,7 @@ function eraseCookie(name) {
               else
               {              
                   $.ajax({
-                                    url: baseURL+"/upsert-service-request",
+                                    url: baseURL+"upsert-service-request",
                                     type: "POST",
                                     contentType: false, // Not to set any content header
                                     processData: false, // Not to process data
@@ -376,7 +376,7 @@ function eraseCookie(name) {
                     if (result == true) {
                         var data = { "ID": ID };
                         $.ajax({
-                            url: baseURL+"/delete-request",
+                            url: baseURL+"delete-request",
                             type: "DELETE",
                             contentType: "application/json; charset=utf-8",
                             data: JSON.stringify(data),
